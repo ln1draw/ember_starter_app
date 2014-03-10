@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Ember Starter Kit</title>
+  <title>Ellen's Ember Starter Blog</title>
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/style.css">
   <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
@@ -53,18 +53,31 @@
   </script>
 
   <script type="text/x-handlebars" id="post">
+    {{#if isEditing}}
+      {{partial 'post/edit'}}
+      <button {{action 'doneEditing'}}>Done</button>
+    {{else}}
+      <button {{action 'edit'}}>Edit</button>
+    {{/if}}
+
     <h1>{{title}}</h1>
-    <h2>by {{author.name}} <small class='muted'>({{date}})</small></h2>
+    <h2>by {{author.name}} <small class='muted'>({{format-date date}})</small></h2>
 
     <hr>
 
     <div class='intro'>
-      {{excerpt}}
+      {{format-markdown excerpt}}
     </div>
 
     <div class='below-the-fold'>
-      {{body}}
+      {{format-markdown body}}
     </div>
+  </script>
+
+  <script type="text/x-handlebars" id="post/_edit">
+    <p>{{input type='text' value=title}}</p>
+    <p>{{input type='text' value=excerpt}}</p>
+    <p>{{textarea value=body}}</p>
   </script>
 
   <script src="js/libs/jquery-1.10.2.js"></script>
